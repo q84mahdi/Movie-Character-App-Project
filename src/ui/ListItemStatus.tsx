@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-const ListItemStatus = styled.span`
+type StatusColor = "red" | "green" | "black";
+
+interface ListItemStatusProps {
+  color: StatusColor;
+}
+
+const ListItemStatus = styled.span<ListItemStatusProps>`
   display: inline-block;
   width: 0.7rem;
   height: 0.7rem;

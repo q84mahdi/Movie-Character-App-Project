@@ -50,7 +50,14 @@ const ModalHeader = styled.div`
   }
 `;
 
-function Modal({ title, children, open, onOpen }) {
+interface ModalProps {
+  title: string;
+  children: React.ReactNode;
+  open: boolean;
+  onOpen: (open: boolean) => void;
+}
+
+function Modal({ title, children, open, onOpen }: ModalProps) {
   if (!open) return null;
 
   return (

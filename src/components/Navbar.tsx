@@ -6,6 +6,7 @@ import Badge from "../ui/Badge";
 import Icon from "../ui/Icon";
 import ButtonIcon from "../ui/ButtonIcon";
 import Character from "./Character";
+import type { CharacterType } from "../types/CharacterType";
 
 const NavbarContainer = styled.nav`
   display: grid;
@@ -71,13 +72,21 @@ const Favorites = styled.button`
   }
 `;
 
+interface NavbarProps {
+  numOfResult: number;
+  searchValue: string;
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  favourites: CharacterType[];
+  onDeleteFavourite: (id: number) => void;
+}
+
 function Navbar({
   numOfResult,
   searchValue,
   onSearch,
   favourites,
   onDeleteFavourite,
-}) {
+}: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -90,7 +99,7 @@ function Navbar({
 
       <Input
         type="text"
-        onChange={(e) => onSearch(e)}
+        onChange={onSearch}
         placeholder="Search ..."
         value={searchValue}
       />
@@ -104,7 +113,7 @@ function Navbar({
           <HeartIcon />
         </Icon>
 
-        <Badge varient="favorites">{favourites.length}</Badge>
+        <Badge variant="favorites">{favourites.length}</Badge>
       </Favorites>
 
       <Modal title={"List Of Favourites"} open={isOpen} onOpen={setIsOpen}>

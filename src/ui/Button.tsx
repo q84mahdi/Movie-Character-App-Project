@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const varients = {
+const variants = {
   primary: css`
     background-color: var(--slate-500);
     color: var(--slate-100);
@@ -10,14 +10,20 @@ const varients = {
     border: 1px solid var(--slate-100);
     color: var(--slate-100);
   `,
-};
+} as const;
 
-const Button = styled.button`
+type ButtonVariant = keyof typeof variants;
+
+interface ButtonProps {
+  variant: ButtonVariant;
+}
+
+const Button = styled.button<Partial<ButtonProps>>`
   padding: 0.8rem 1rem;
   border-radius: 1rem;
   font-weight: 700;
 
-  ${(props) => varients[props.varient]}
+  ${({ variant = "primary" }) => variants[variant]}
 `;
 
 export default Button;
