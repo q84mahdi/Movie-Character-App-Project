@@ -7,6 +7,7 @@ import useCharacters from "./hooks/useCharacters";
 import useLocalStorage from "./hooks/useLocalStorage";
 import GlobalStyles from "./styles/globalStyles";
 import styled from "styled-components";
+import type { CharacterType } from "./types/CharacterType";
 
 const MainHandler = styled.div`
   display: flex;
@@ -21,31 +22,34 @@ const MainHandler = styled.div`
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const { characters, isLoading } = useCharacters(searchValue);
-  const [favourites, setFavourites] = useLocalStorage("Favourits", []);
+  const [favourites, setFavourites] = useLocalStorage<CharacterType[]>(
+    "Favourits",
+    []
+  );
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
   };
 
-  const handleSelectedCharacter = (id) => {
+  const handleSelectedCharacter = (id: number) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
   };
 
-  const handleAddFavourite = (char) => {
+  const handleAddFavourite = (char: CharacterType) => {
     setFavourites((prevFav) => [...prevFav, char]);
   };
 
-  const handleDeleteFavourite = (id) => {
+  const handleDeleteFavourite = (id: number) => {
     setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== id));
   };
 
-  const isAddedToFavourites = favourites
-    .map((fav) => fav.id)
-    .includes(selectedId);
+  const isAddedToFavourites =
+    (selectedId && favourites.map((fav) => fav.id).includes(selectedId)) ||
+    false;
 
   return (
     <div className="app">
