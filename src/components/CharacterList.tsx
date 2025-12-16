@@ -3,6 +3,7 @@ import Loader from "./Loader";
 import styled from "styled-components";
 import ButtonIcon from "../ui/ButtonIcon";
 import Character from "./Character";
+import type { CharacterType } from "../types/CharacterType";
 
 const CharacterListContainer = styled.div`
   width: 45%;
@@ -29,12 +30,19 @@ const CharacterListContainer = styled.div`
   }
 `;
 
+interface CharacterListProps {
+  characters: CharacterType[];
+  isLoading: boolean;
+  onSelectedCharacter: (id: number) => void;
+  selectedId: number | null;
+}
+
 function CharacterList({
   characters,
   isLoading,
   onSelectedCharacter,
   selectedId,
-}) {
+}: CharacterListProps) {
   if (isLoading) {
     return (
       <CharacterListContainer>
