@@ -1,16 +1,15 @@
 import styled, { css } from "styled-components";
 
-const varients = {
+const variants = {
   favorites: css`
     font-size: 0.9rem;
     position: absolute;
     top: 0;
     right: -6px;
-    display: inline-block;
+    display: inline-flex;
     background-color: var(--rose-500);
     color: #fff;
     border-radius: 50%;
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: 1px 4px;
@@ -19,16 +18,22 @@ const varients = {
   secondary: css`
     background-color: var(--slate-600);
   `,
-};
+} as const;
 
-const Badge = styled.span`
+type BadgeVariant = keyof typeof variants;
+
+interface BadgeProps {
+  variant: BadgeVariant;
+}
+
+const Badge = styled.span<Partial<BadgeProps>>`
   white-space: nowrap;
   padding: 0.3rem 1rem;
   border-radius: 1rem;
   font-size: 0.8rem;
   font-weight: 700;
 
-  ${(props) => varients[props.varient]}
+  ${({ variant = "secondary" }) => variants[variant]}
 `;
 
 export default Badge;
