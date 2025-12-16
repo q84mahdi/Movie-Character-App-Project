@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ListItemStatus from "../ui/ListItemStatus";
 import Button from "../ui/Button";
+import type { CharacterType } from "../types/CharacterType";
 
 const CharacterInfoContainer = styled.div`
   display: flex;
@@ -68,7 +69,17 @@ const CharacterInfoAction = styled.div`
   }
 `;
 
-function CharacterInfo({ character, onAddFavourite, isAddedToFavourites }) {
+interface CharacterInfoProps {
+  character: CharacterType;
+  onAddFavourite: (char: CharacterType) => void;
+  isAddedToFavourites: boolean;
+}
+
+function CharacterInfo({
+  character,
+  onAddFavourite,
+  isAddedToFavourites,
+}: CharacterInfoProps) {
   return (
     <CharacterInfoContainer>
       <CharacterInfoImage src={character.image} alt={character.name} />
@@ -86,7 +97,7 @@ function CharacterInfo({ character, onAddFavourite, isAddedToFavourites }) {
                 ? "red"
                 : character.status === "Alive"
                 ? "green"
-                : ""
+                : "black"
             }
           />
           <span>{` ${character.status} - ${character.species}`}</span>
@@ -101,7 +112,7 @@ function CharacterInfo({ character, onAddFavourite, isAddedToFavourites }) {
           {isAddedToFavourites ? (
             <p>Already added to favourites ✔</p>
           ) : (
-            <Button varient="primary" onClick={() => onAddFavourite(character)}>
+            <Button variant="primary" onClick={() => onAddFavourite(character)}>
               Add To Favorite
             </Button>
           )}

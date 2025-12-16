@@ -2,6 +2,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/20/solid";
 import styled from "styled-components";
 import Badge from "../ui/Badge";
 import { useState } from "react";
+import type { EpisodeType } from "../types/episodesType";
 
 const CharacterEpisodesContainer = styled.div`
   background-color: var(--slate-800);
@@ -55,18 +56,22 @@ const CharacterEpisodesItem = styled.li`
   padding: 0.5rem 0;
 `;
 
-function CharacterEpisodes({ episodes }) {
+interface CharacterEpisodesProps {
+  episodes: EpisodeType[];
+}
+
+function CharacterEpisodes({ episodes }: CharacterEpisodesProps) {
   const [sortBy, setSortBy] = useState(true);
 
-  let sortedEpisodes;
+  let sortedEpisodes: EpisodeType[];
 
   if (sortBy) {
     sortedEpisodes = [...episodes].sort(
-      (a, b) => new Date(a.created) - new Date(b.created)
+      (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
     );
   } else {
     sortedEpisodes = [...episodes].sort(
-      (a, b) => new Date(b.created) - new Date(a.created)
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
     );
   }
 
@@ -88,12 +93,12 @@ function CharacterEpisodes({ episodes }) {
           <CharacterEpisodesItem key={item.id}>
             <div>
               <span>
-                {String(index + 1).padStart(2, 0)} - {item.episode} :
+                {String(index + 1).padStart(2, "0")} - {item.episode} :
               </span>
               <strong> {item.name}</strong>
             </div>
 
-            <Badge varient="secondary">{item.air_date}</Badge>
+            <Badge variant="secondary">{item.air_date}</Badge>
           </CharacterEpisodesItem>
         ))}
       </ul>

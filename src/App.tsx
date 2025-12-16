@@ -75,7 +75,6 @@ function App() {
 
         <CharacterDetail
           selectedId={selectedId}
-          characters={characters}
           onAddFavourite={handleAddFavourite}
           isAddedToFavourites={isAddedToFavourites}
         />
