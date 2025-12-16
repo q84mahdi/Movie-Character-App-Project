@@ -1,9 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import type { CharacterType } from "../types/CharacterType";
 
-export default function useCharacters(searchValue) {
-  const [characters, setCharacters] = useState([]);
+interface GetCharactersResult {
+  results: CharacterType[];
+}
+
+export default function useCharacters(searchValue: string) {
+  const [characters, setCharacters] = useState<CharacterType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -13,12 +18,12 @@ export default function useCharacters(searchValue) {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const res = await axios.get(
+        const res = await axios.get<GetCharactersResult>(
           `https://rickandmortyapi.com/api/character?name=${searchValue}`,
           { cancelToken: source.token }
         );
         setCharacters(res.data.results);
-      } catch (err) {
+      } catch (err: any) {
         if (axios.isCancel(err)) {
           console.log("successfully aborted");
         } else {
