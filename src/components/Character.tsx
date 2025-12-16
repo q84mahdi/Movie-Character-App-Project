@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ListItemStatus from "../ui/ListItemStatus";
+import type { CharacterType } from "../types/CharacterType";
 
 const ListItem = styled.div`
   display: grid;
@@ -41,7 +42,12 @@ const ListItemInfo = styled.div`
   color: var(--slate-200);
 `;
 
-function Character({ item, children }) {
+interface CharacterProps {
+  item: CharacterType;
+  children: React.ReactNode;
+}
+
+function Character({ item, children }: CharacterProps) {
   return (
     <ListItem>
       <ListItemImage src={item.image} alt={item.name} />
@@ -58,7 +64,7 @@ function Character({ item, children }) {
               ? "red"
               : item.status === "Alive"
               ? "green"
-              : ""
+              : "black"
           }
         />
 
